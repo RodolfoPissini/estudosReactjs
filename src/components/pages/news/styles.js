@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import {darken} from 'polished';
-import Modal from 'react-modal'
-
+import { MdDelete } from "react-icons/md";
 import { AiFillLike, AiFillDislike, AiFillHeart} from "react-icons/ai";
 
 export const Container = styled.div`
@@ -41,7 +40,17 @@ export const ContentPost = styled.div`
   padding: 2rem;
   border-radius: 0.25rem;
   margin-bottom:4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
+
+export const ContentContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
 
 export const ContentIcons = styled.div`
   margin-top:2rem;
@@ -90,12 +99,16 @@ export const DisLike = styled(AiFillDislike)`
   }
 `;
 
-export const ModalContainer = styled.form`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+export const DeleteButton = styled(MdDelete)`
+  font-size:3rem;
+  color: #E60C2C;
+  margin-right:1rem;
 
+  cursor:pointer;
+
+  transition: color 0.5s;
+
+&:hover{
+      color: ${darken(0.1, '#E60C2C')};
+  }
 `;

@@ -33,7 +33,6 @@ export const GlobalStyles = createGlobalStyle`
     background: ${(props)=> props.color ? props.color : '#0062BE'};
     -webkit-font-smoothing: antialiased;
 
-    transition: 0.8s;
   }
 
   button{

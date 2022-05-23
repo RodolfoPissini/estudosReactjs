@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { AiOutlineClose } from "react-icons/ai";
+import {darken} from 'polished';
 
 export const Container = styled.div`
   position: absolute;
@@ -36,13 +37,15 @@ export const ModalWrapper = styled.div`
 
 export const ModalContent = styled.div`
   position: relative;
-  display: flex;
+  /* display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  color: #141414;
+  color: #141414; */
 
   form{
+    width: 800px;
+    height:500px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -50,20 +53,48 @@ export const ModalContent = styled.div`
     width: 700px;
   }
   h1{
+    margin-right: 24rem;
+    font-size:1.2rem;
     text-transform: uppercase;
   }
   input[type=text]{
+    font-size:1.2rem;
+    background: #F2F2F2;
+    padding: 0.4rem;
+    margin-right: 19rem;
+    border: none;
+    outline: none;
     width: 50%;
   }
   h2{
+    margin-right: 30rem;
     text-transform: uppercase;
   }
 
   textarea{
-    width: 50%;
+    font-size:1rem;
+    background: #F2F2F2;
+    padding: 0.4rem;
+    outline: none;
+    width: 95%;
+    border: none;
+    border-radius: 0.25rem;
   }
-  input[type=button]{
+  button{
+    text-transform: uppercase;
+    border: none;
+    background: #0062BE;
+    color: #FFF;
+    font-size:1.2rem;
+    padding: 0.5rem 3rem;
+    border-radius: 0.25rem;
     margin-top:2rem;
+
+    cursor:pointer;
+
+    &:hover{
+      background: ${darken(0.1, '#0062BE')};
+    }
   }
  
 `;

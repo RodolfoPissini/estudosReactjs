@@ -1,5 +1,5 @@
-import {useRef, useEffect, useCallback} from 'react';
-import { useSpring, animated } from 'react-spring';
+import {useRef, useEffect, useCallback, useState} from 'react';
+import { api } from '../../services/api';
 
 import { Container, 
   Background,
@@ -10,15 +10,9 @@ import { Container,
 
 export function PostModal({isNewPostModalOpen,setIsNewPostModal}){
   const modalRef = useRef();
+  const [post, setPost] = useState('');
+  const [bodyPost, setBodyPost] = useState('');
 
-  const animation = useSpring({
-    config:{
-      duration:250
-    },
-    opacity: isNewPostModalOpen ? 1 : 0,
-    transform: isNewPostModalOpen ? 'transleteY(0%)' : 'transleteY(-50%)'
-
-  })
 
   function closeModal(e){
     if(modalRef.current === e.target){
@@ -37,7 +31,17 @@ export function PostModal({isNewPostModalOpen,setIsNewPostModal}){
     return () => document.removeEventListener('keydown', keyPress)
   },[keyPress])
 
-console.log(animation)
+  function handleCreateNewPost(e){
+    e.preventDefault();
+
+    const data = {
+      post,
+      bodyPost
+    };
+
+    api.post('/')
+  }
+
   return(
     <Container>
     {isNewPostModalOpen ?(
@@ -45,17 +49,25 @@ console.log(animation)
         ref={modalRef}
         onClick={closeModal}
       >
-        {/* <animated.div style={animation}> */}
           <ModalWrapper 
             isNewPostModalOpen={isNewPostModalOpen}
           >
-            <ModalContent>
+            <ModalContent onSubmit={handleCreateNewPost}>
               <form action="">
-                <h1>Difite um título pro post</h1>
-                <input type="text" />
-                <h2>Digite o POst</h2>
-                <textarea name="" id="" cols="30" rows="10"></textarea>
-                <input type="button" value="enviar" />
+                <h1>Digite um título pro post</h1>
+                <input 
+                  type="text"
+                  value={post}
+                  onChange={event => setPost(event.target.value)}
+                />
+                <h2>Digite o Post</h2>
+                <textarea 
+                  cols="30" 
+                  rows="10"
+                  value={bodyPost}
+                  onChange={event => setBodyPost(event.target.value)}
+                />
+                <button type="submit">Send</button>
               </form>
             <CloseModalButton 
               aria-label="Close modal"
@@ -63,11 +75,9 @@ console.log(animation)
             />
             </ModalContent>
           </ModalWrapper>
-        {/* </animated.div> */}
       </Background>
     )  : null  
-    }
-    
+    }    
     </Container>
   )
 }
