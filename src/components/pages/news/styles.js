@@ -34,21 +34,27 @@ export const Container = styled.div`
 `;
 
 export const ContentPost = styled.div`
-  /* position: relative; */
   width: 100%;
   background: #F0EFEE;
   padding: 2rem;
   border-radius: 0.25rem;
   margin-bottom:4rem;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 export const ContentContainer = styled.div`
+  width: 95%;
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  p{
+    width: 90%;
+  }
+
 `;
 
 
@@ -100,7 +106,7 @@ export const DisLike = styled(AiFillDislike)`
 `;
 
 export const DeleteButton = styled(MdDelete)`
-  font-size:3rem;
+  font-size:4rem;
   color: #E60C2C;
   margin-right:1rem;
 

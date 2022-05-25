@@ -1,5 +1,5 @@
-import {useRef, useEffect, useCallback, useState} from 'react';
-import { api } from '../../services/api';
+import {useRef, useEffect, useCallback, useState, useContext} from 'react';
+import { PostContext } from '../../context/apiContext';
 
 import { Container, 
   Background,
@@ -10,8 +10,8 @@ import { Container,
 
 export function PostModal({isNewPostModalOpen,setIsNewPostModal}){
   const modalRef = useRef();
-  const [post, setPost] = useState('');
-  const [bodyPost, setBodyPost] = useState('');
+  const {createPosts, posties,postBodie} = useContext(PostContext)
+  const {setPosties, setPostBodie} = useContext(PostContext)
 
 
   function closeModal(e){
@@ -31,15 +31,18 @@ export function PostModal({isNewPostModalOpen,setIsNewPostModal}){
     return () => document.removeEventListener('keydown', keyPress)
   },[keyPress])
 
-  function handleCreateNewPost(e){
+  async function handleCreateNewPost(e){
     e.preventDefault();
 
-    const data = {
-      post,
-      bodyPost
-    };
+    await createPosts({
+      posties,
+      postBodie
+    })
 
-    api.post('/')
+    setPosties('')
+    setPostBodie('')
+
+    setIsNewPostModal(false);    
   }
 
   return(
@@ -57,15 +60,15 @@ export function PostModal({isNewPostModalOpen,setIsNewPostModal}){
                 <h1>Digite um título pro post</h1>
                 <input 
                   type="text"
-                  value={post}
-                  onChange={event => setPost(event.target.value)}
+                  value={posties}
+                  onChange={event => setPosties(event.target.value)}
                 />
                 <h2>Digite o Post</h2>
                 <textarea 
                   cols="30" 
                   rows="10"
-                  value={bodyPost}
-                  onChange={event => setBodyPost(event.target.value)}
+                  value={postBodie}
+                  onChange={event => setPostBodie(event.target.value)}
                 />
                 <button type="submit">Send</button>
               </form>
