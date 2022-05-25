@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import Modal from 'react-modal'
+import { PostContext } from "../../../context/apiContext";
 import {PepsiContext} from '../../../context/index';
 import { api } from "../../../services/api";
 import { PostModal } from "../../modal";
@@ -19,18 +20,25 @@ export function News(){
   const {setPepsiColor} = useContext(PepsiContext);
   const [isNewPostModalOpen, setIsNewPostModal] = useState(false);
 
+  const {newPost, deletePosts} = useContext(PostContext);
+
   function handleOpenNewPostModal(){
     setIsNewPostModal(prev => !prev)
+  }
+
+  async function handleDeletePost(id){
+    // console.log(id)
+
+    await deletePosts({
+      id
+    })
+    // return api.delete(`news/api/posts${id}`)
   }
 
   useEffect(()=>{
     setPepsiColor('#0062BE')
   },[])
 
-  useEffect(()=>{
-    api.get('news/api/posts')
-      .then(response => console.log(response.data))
-  },[])
 
   return(
     <Container>
@@ -43,20 +51,23 @@ export function News(){
         isNewPostModalOpen={isNewPostModalOpen}
         setIsNewPostModal={setIsNewPostModal}
       />
-      <ContentPost>
-      <ContentContainer>  
-        <div>
-          <h1>News</h1>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iusto, officiis deleniti harum similique voluptatum quam consectetur dolor necessitatibus distinctio quod eveniet at, eius sed exercitationem, cum iure magnam sequi?</p>
-        <ContentIcons>
-          <p><span><Heartbeat/></span></p>
-          <p><span><Like/></span></p>
-          <p><span><DisLike/></span></p>
-        </ContentIcons>
-        </div>    
-        <DeleteButton/> 
-      </ContentContainer>         
-      </ContentPost>  
+      {newPost.map((posts) => (
+        
+        <ContentPost key={posts.id}>
+          <ContentContainer >  
+            <div>
+              <h1>{posts.posties}</h1>
+              <p>{posts.postBodie}</p>
+              <ContentIcons>
+                <span><Heartbeat/></span>
+                <span><Like/></span>
+                <span><DisLike/></span>
+              </ContentIcons>
+            </div>    
+          </ContentContainer>         
+            <DeleteButton onClick={()=>handleDeletePost(posts.id)}/> 
+        </ContentPost>  
+      ))}
     </Container>
   )
 }

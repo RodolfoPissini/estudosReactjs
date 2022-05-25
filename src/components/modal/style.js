@@ -18,6 +18,8 @@ export const Background = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
+  position: fixed;
 `;
 
 export const ModalWrapper = styled.div`
@@ -37,13 +39,9 @@ export const ModalWrapper = styled.div`
 
 export const ModalContent = styled.div`
   position: relative;
-  /* display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  color: #141414; */
 
   form{
+    margin-top:2rem;
     width: 800px;
     height:500px;
     display: flex;
@@ -101,7 +99,7 @@ export const ModalContent = styled.div`
 
 export const CloseModalButton = styled(AiOutlineClose)`
   position: absolute;
-  top: 0.2rem;
+  top: 2rem;
   right: 0.1rem;
   width: 2rem;
   height: 2rem;
